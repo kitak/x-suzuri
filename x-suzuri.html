@@ -42,6 +42,7 @@
       }
     </style>
     <div id="product">
+      <!-- This token is read only -->
       <core-ajax url="https://suzuri.jp/api/v1/products/{{productId}}.json" auto handleAs="json" headers='{"Authorization": "Bearer 97125fb910a3c1b28b209cb78803a0dc6c8973c82ed82d646d97930da32d445c"}' on-core-response="{{handleResponse}}"></core-ajax>
       <p id="product__image">
         <img src="{{product.sampleImageUrl}}" alt="{{product.title}}" on-click="{{moveProductPage}}">
