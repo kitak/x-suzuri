@@ -1,0 +1,69 @@
+<link rel="import" href="bower_components/polymer/polymer.html">
+<link rel="import" href="bower_components/core-ajax/core-ajax.html">
+
+<polymer-element name="x-suzuri" attributes="productId">
+  <template>
+    <style>
+      #product {
+        width: 200px;
+      }
+
+      #product__image {
+        padding: 0;
+        margin: 0;
+      }
+
+      #product__image img {
+        max-width: 100%;
+        height: auto;
+      }
+
+      #product__user {
+        text-align: left;
+        color: #000000;
+        font-size: 12px;
+        margin: 0;
+      }
+
+      #product__user img {
+        max-width: 100%;
+        width: 20px;
+        height: 20px;
+        margin-bottom: 0;
+        padding: 0;
+        vertical-align: middle;
+      }
+
+      #product__title {
+        text-align: left;
+        color: #000000;
+        font-size: 12px;
+        margin: 0;
+      }
+    </style>
+    <div id="product">
+      <core-ajax url="https://suzuri.jp/api/v1/products/{{productId}}.json" auto handleAs="json" headers='{"Authorization": "Bearer 97125fb910a3c1b28b209cb78803a0dc6c8973c82ed82d646d97930da32d445c"}' on-core-response="{{handleResponse}}"></core-ajax>
+      <p id="product__image">
+        <img src="{{product.sampleImageUrl}}" alt="{{product.title}}" on-click="{{moveProductPage}}">
+      </p>
+      <p id="product__user">
+        <img src="{{user.avatarUrl}}" alt="{{user.name}}">
+        {{user.displayName}}
+      </p>
+      <p id="product__title">{{product.title}} ￥{{itemVariant.price}}</p>
+    </div>
+  </template>
+  <script>
+    Polymer({
+      handleResponse: function (e) {
+        this.product = e.detail.response.product;
+        this.itemVariant = this.product.sampleItemVariant;
+        this.user = this.product.material.user;
+      },
+      productId: 0,
+      moveProductPage: function (e) {
+        location.href = this.product.sampleUrl;
+      }
+    });
+  </script>
+</polymer-element>
